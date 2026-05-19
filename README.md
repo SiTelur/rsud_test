@@ -1,4 +1,4 @@
-# RSUD API
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 25" src="https://github.com/user-attachments/assets/5e898bfe-8201-4912-8d9f-4de8f6b70a5d" /># RSUD API
 
 A simple Laravel API for managing products, orders, and dashboard statistics with Sanctum authentication.
 
@@ -59,6 +59,10 @@ Gunakan akun ini untuk login di Insomnia.
 
 ### Login
 
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 25" src="https://github.com/user-attachments/assets/c6a47dcf-3e6d-4dc1-870a-11d7be60181f" />
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 31" src="https://github.com/user-attachments/assets/30a6fd02-ffc6-40d2-ab70-fcd7cea2c2ce" />
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 31" src="https://github.com/user-attachments/assets/c14473fc-3717-4a21-bee3-3527d09a0a22" />
+
 `POST /api/login`
 
 Request body:
@@ -84,6 +88,8 @@ Response:
 
 ### Products
 
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 34" src="https://github.com/user-attachments/assets/5f395d67-7200-42ca-a382-6c304b2da563" />
+
 `GET /api/products`
 
 Query params:
@@ -91,6 +97,8 @@ Query params:
 - `search` (optional) — search nama produk
 
 ### Create Order
+
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 31" src="https://github.com/user-attachments/assets/fdcb0e85-397b-45fb-a6f9-176dd5083611" />
 
 `POST /api/order`
 
@@ -109,6 +117,9 @@ Body:
 
 ### Dashboard
 
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 37" src="https://github.com/user-attachments/assets/6cc96c05-f891-44a2-a924-cd2605976656" />
+
+
 `GET /api/dashboard`
 
 Header:
@@ -126,6 +137,9 @@ Response contains:
 - `from_cache`
 
 ### Clear Dashboard Cache
+
+<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 40 24" src="https://github.com/user-attachments/assets/bd430834-a52e-4a84-b181-35959263a7b5" />
+
 
 `DELETE /api/dashboard/cache`
 
