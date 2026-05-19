@@ -60,8 +60,6 @@ Gunakan akun ini untuk login di Insomnia.
 ### Login
 
 <img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 25" src="https://github.com/user-attachments/assets/c6a47dcf-3e6d-4dc1-870a-11d7be60181f" />
-<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 31" src="https://github.com/user-attachments/assets/30a6fd02-ffc6-40d2-ab70-fcd7cea2c2ce" />
-<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 31" src="https://github.com/user-attachments/assets/c14473fc-3717-4a21-bee3-3527d09a0a22" />
 
 `POST /api/login`
 
