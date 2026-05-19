@@ -1,58 +1,175 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RSUD API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple Laravel API for managing products, orders, and dashboard statistics with Sanctum authentication.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Autentikasi login menggunakan Laravel Sanctum
+- Endpoint produk dengan filter `is_active` dan paginasi
+- Buat order dengan pengecekan stok dan transaksi database
+- Dashboard summary dengan cache TTL 300 detik
+- Hapus cache dashboard melalui API
+- Order details dengan validasi kepemilikan user
+- Resource response menggunakan `ProductResource` dan `OrderSummaryResource`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Install dependencies:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Salin file environment:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Atur konfigurasi database di `.env`
 
-## Code of Conduct
+4. Generate app key:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+5. Jalankan migrasi dan seed:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate:fresh --seed
+```
 
-## License
+6. Mulai server:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan serve
+```
+
+## Default User
+
+Seeder menambahkan user default yang mudah digunakan:
+
+- Email: `admin@example.com`
+- Password: `password`
+
+Gunakan akun ini untuk login di Insomnia.
+
+## API Endpoints
+
+### Login
+
+`POST /api/login`
+
+Request body:
+
+```json
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Login berhasil.",
+  "data": {
+    "user": { ... },
+    "token": "..."
+  }
+}
+```
+
+### Products
+
+`GET /api/products`
+
+Query params:
+
+- `search` (optional) — search nama produk
+
+### Create Order
+
+`POST /api/order`
+
+Header:
+
+- `Authorization: Bearer <token>`
+
+Body:
+
+```json
+{
+  "product_id": 1,
+  "qty": 2
+}
+```
+
+### Dashboard
+
+`GET /api/dashboard`
+
+Header:
+
+- `Authorization: Bearer <token>`
+
+Response contains:
+
+- `total_revenue_ordercomplete`
+- `total_order_today`
+- `total_product_active`
+- `low_stock_count`
+- `top_products`
+- `latest_orders`
+- `from_cache`
+
+### Clear Dashboard Cache
+
+`DELETE /api/dashboard/cache`
+
+Header:
+
+- `Authorization: Bearer <token>`
+
+### Cek Order Saya
+
+`GET /api/orders/{order}`
+
+Header:
+
+- `Authorization: Bearer <token>`
+
+Response hanya akan berhasil jika order milik user yang login.
+
+## Insomnia
+
+Untuk Insomnia, buat request collection berikut:
+
+- `POST /api/login`
+- `GET /api/products`
+- `POST /api/order`
+- `GET /api/dashboard`
+- `DELETE /api/dashboard/cache`
+- `GET /api/orders/{order}`
+
+Masukkan header `Accept: application/json` dan `Authorization: Bearer <token>` untuk endpoint yang dilindungi.
+
+![Insomnia Screenshot](docs/insomnia-screenshot.png)
+
+> Letakkan tangkapan layar Insomnia di file `docs/insomnia-screenshot.png` jika ingin menampilkan tampilan request.
+
+## Notes
+
+- Pastikan `auth:sanctum` middleware aktif pada endpoint yang butuh login.
+- `dashboard_summary` di-cache selama 300 detik.
+- Jika cache harus dihapus, panggil `DELETE /api/dashboard/cache`.
+
+## Run Tests
+
+Jika ingin menambahkan testing di masa depan, gunakan:
+
+```bash
+php artisan test
+```
