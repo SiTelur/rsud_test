@@ -1,4 +1,4 @@
-<img width="1236" height="927" alt="Screenshot 2026-05-19 at 12 38 25" src="https://github.com/user-attachments/assets/5e898bfe-8201-4912-8d9f-4de8f6b70a5d" /># RSUD API
+# RSUD API
 
 A simple Laravel API for managing products, orders, and dashboard statistics with Sanctum authentication.
 
